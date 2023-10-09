@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAgent.API\DataAgent.API.csproj" />
+    <ProjectReference Include="..\DataAgent.Monitors.Interactions\DataAgent.Monitors.Interactions.csproj" />
+    <ProjectReference Include="..\DataAgent.SystemMonitors\DataAgent.Monitors.System.csproj" />
+  </ItemGroup>
+
+</Project>

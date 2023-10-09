@@ -1,0 +1,144 @@
+﻿<Window x:Class="DataAgent.ClientApps.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataAgent.ClientApps.WPF"
+        mc:Ignorable="d"
+        Title="DataAgent-Client-WPF" Height="450" Width="800">
+  <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <local:PropertiesValuesConverter x:Key="PropertiesValuesConverter"/>
+    <local:PropertiesValuesConverterWithoutError x:Key="PropertiesValuesConverterWithoutError"/>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <ToolBarTray>
+      <ToolBar>
+        <ToggleButton IsChecked="{Binding LoggingEnabled}">
+          <ToggleButton.Style>
+            <Style TargetType="ToggleButton">
+              <Style.Setters>
+                <Setter Property="Content" Value="Disable Logging"/>
+              </Style.Setters>
+              <Style.Triggers>
+                <Trigger Property="IsChecked" Value="False">
+                  <Trigger.Setters>
+                    <Setter Property="Content" Value="Enable Logging"/>
+                  </Trigger.Setters>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </ToggleButton.Style>
+        </ToggleButton>
+        <ToggleButton IsChecked="{Binding LogErrors}" Content=" Log Errors "/>
+        <Button Content="Clear Messages" Command="{Binding ClearMessagesCommand}"/>
+      </ToolBar>
+    </ToolBarTray>
+    <Grid Grid.Row="1" Margin="2,0,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <GroupBox Header="Monitors" Padding="5,2,5,2">
+        <ListView ItemsSource="{Binding Monitors}" BorderBrush="Transparent">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <CheckBox Content="{Binding DisplayName}" IsChecked="{Binding IsEnabled}"/>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </GroupBox>
+      <Grid Grid.Column="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="8*"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Messages">
+          <ListView ItemsSource="{Binding Messages}" Name="messageList">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Header="Time Stamp" DisplayMemberBinding="{Binding TimeStamp}"/>
+                <GridViewColumn Header="Monitor" DisplayMemberBinding="{Binding Sender}"/>
+                <GridViewColumn Header="Process" DisplayMemberBinding="{Binding ProcessName}"/>
+                <GridViewColumn Header="Window Title" DisplayMemberBinding="{Binding WindowTitle}"/>
+                <GridViewColumn Header="Event" DisplayMemberBinding="{Binding Event}"/>
+                <GridViewColumn Header="Cursor" DisplayMemberBinding="{Binding CursorPosition}"/>
+                <GridViewColumn Header="Input Element Kind" DisplayMemberBinding="{Binding InputElementType}"/>
+                <GridViewColumn Header="Input Element Name" DisplayMemberBinding="{Binding InputElementName}"/>
+                <GridViewColumn Header="Focused Element Kind" DisplayMemberBinding="{Binding FocusedElementType}"/>
+                <GridViewColumn Header="FocusedElementName" DisplayMemberBinding="{Binding FocusedElementName}"/>
+                <GridViewColumn Header="Additional Properties">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <TextBlock TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                                 Text="{Binding Converter={StaticResource PropertiesValuesConverterWithoutError}}"
+                                 HorizontalAlignment="Left"
+                                 TextAlignment="Left"
+                                 FontStyle="Italic"
+                                 ToolTip="{Binding Converter={StaticResource PropertiesValuesConverterWithoutError}}"
+                                 MaxHeight="100"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+              </GridView>
+            </ListView.View>
+            <!--<ListView.ItemContainerStyle>
+      <Style TargetType="ListViewItem">
+        <Style.Setters>
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="ListViewItem">
+                <StackPanel>
+                  <GridViewRowPresenter Content="{TemplateBinding Content}" 
+                                        Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                  <TextBlock Text="{Binding Converter={StaticResource PropertiesValuesConverter}}"
+                             Visibility="{Binding IsVerbose, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left"
+                             Margin="5,2,5,2" FontStyle="Italic"
+                             MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                </StackPanel>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style.Setters>
+      </Style>
+    </ListView.ItemContainerStyle>-->
+          </ListView>
+        </GroupBox>
+        <GridSplitter Grid.Row="1" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <GroupBox Header="Selected Message Additional Info (If available)" Grid.Row="2" 
+                  DataContext="{Binding ElementName=messageList, Path=SelectedItem}">
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <TextBlock Text="{Binding Converter={StaticResource PropertiesValuesConverter}}"
+                       TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left"
+                       Margin="5,2,5,2" FontStyle="Italic"/>
+          </ScrollViewer>
+        </GroupBox>
+      </Grid>
+    </Grid>
+    <StatusBar Grid.Row="2">
+      <StatusBarItem>
+        <StatusBarItem.Style>
+          <Style TargetType="StatusBarItem">
+            <Style.Setters>
+              <Setter Property="Content" Value="Not Logging"/>
+            </Style.Setters>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding LoggingEnabled}" Value="True">
+                <DataTrigger.Setters>
+                  <Setter Property="Content" Value="Logging..."/>
+                </DataTrigger.Setters>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </StatusBarItem.Style>
+      </StatusBarItem>
+    </StatusBar>
+  </Grid>
+</Window>
