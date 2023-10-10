@@ -96,7 +96,7 @@ internal class MouseMonitor : MessagePublisher, IMonitorMouse
 
             if (wParam == (IntPtr)WindowsMessages.WM_LBUTTONDOWN || wParam == (IntPtr)WindowsMessages.WM_RBUTTONDOWN)
             {
-                if (DateTime.Now - lastHandledEventTimeStamp > minWaitForNextEvent)
+                if (DateTime.Now - lastHandledEventTimeStamp > MinWaitForNextEvent)
                 {
                     lastHandledEventTimeStamp = DateTime.Now;
                     Externs.GetCursorPos(out POINT point);

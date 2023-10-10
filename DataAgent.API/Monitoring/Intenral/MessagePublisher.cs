@@ -22,7 +22,18 @@ public abstract class MessagePublisher : IMessagePublisherHookable, IMessagePubl
     protected ConcurrentQueue<IMonitorMessage> publishQueue = new();
     protected int monitorProcessId = Literals.Properties.UnsetProcessId;
     protected DateTime lastHandledEventTimeStamp = DateTime.Now;
-    protected TimeSpan minWaitForNextEvent = TimeSpan.FromMilliseconds(200);
+    private TimeSpan minWaitForNextEvent = TimeSpan.FromMilliseconds(200);
+
+    protected TimeSpan MinWaitForNextEvent
+    {
+        get => minWaitForNextEvent;
+        set
+        {
+            minWaitForNextEvent = value;
+            RaisePropertyChanged(nameof(MinWaitForNextEvent));
+            RaisePropertyChanged(nameof(WaitInBetweenEvents));
+        }
+    }
 
     public bool IsEnabled
     {
@@ -32,6 +43,11 @@ public abstract class MessagePublisher : IMessagePublisherHookable, IMessagePubl
             isEnabled = value;
             RaisePropertyChanged(nameof(IsEnabled));
         }
+    }
+    public double WaitInBetweenEvents
+    {
+        get => minWaitForNextEvent.TotalMilliseconds;
+        set => MinWaitForNextEvent = TimeSpan.FromMilliseconds(value);
     }
     public string Name => name;
 

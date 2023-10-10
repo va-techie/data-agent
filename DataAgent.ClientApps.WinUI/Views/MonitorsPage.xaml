@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="DataAgent.ClientApps.WinUI.Views.MonitorsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d">
+
+  <Grid x:Name="ContentArea">
+    <ListView ItemsSource="{Binding Monitors}" BorderBrush="Transparent">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleSwitch Header="{Binding DisplayName}" IsOn="{Binding IsEnabled, Mode=TwoWay}"/>
+            <Slider Value="{Binding WaitInBetweenEvents, Mode=TwoWay}" Width="Auto"
+                    Minimum="100" Maximum="1000" TickFrequency="100" TickPlacement="BottomRight"
+                    SnapsTo="Ticks"
+                    Margin="5,0,5,0"
+                    Grid.Column="1">
+              <Slider.Header>
+                <TextBlock>
+                  <Run Text="Wait "/>
+                  <Run Text="{Binding WaitInBetweenEvents}"/>
+                  <Run Text=" ms before monitoring next event"/>
+                </TextBlock>
+              </Slider.Header>
+            </Slider>
+          </Grid>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+    <!--<controls:DataGrid GridLinesVisibility="None"
+                       IsReadOnly="True"
+                       ItemsSource="{Binding Monitors}"
+                       AutoGenerateColumns="False"
+                       SelectionMode="Single">
+      <controls:DataGrid.Columns>
+        <controls:DataGridTextColumn Binding="{Binding DisplayName}" Header="Monitor Name"/>
+        <controls:DataGridTemplateColumn Header="Monitoring">
+          <controls:DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}"/>
+            </DataTemplate>
+          </controls:DataGridTemplateColumn.CellTemplate>
+        </controls:DataGridTemplateColumn>
+        <controls:DataGridTemplateColumn Header="Wait Before Monitroing Next Event">
+          <controls:DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <Slider Value="{Binding WaitInBetweenEvents, Mode=TwoWay}" Width="250"
+                        Minimum="100" Maximum="1000" TickFrequency="100" TickPlacement="BottomRight"
+                        SnapsTo="Ticks"
+                        Margin="5,0,5,0"/>
+                <TextBlock Text="{Binding WaitInBetweenEvents}" VerticalAlignment="Center"/>
+                <TextBlock Text=" ms" VerticalAlignment="Center"/>
+              </StackPanel>
+            </DataTemplate>
+          </controls:DataGridTemplateColumn.CellTemplate>
+        </controls:DataGridTemplateColumn>
+      </controls:DataGrid.Columns>
+    </controls:DataGrid>-->
+  </Grid>
+</Page>

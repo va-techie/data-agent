@@ -30,7 +30,7 @@ internal class Toggle : AutomationMonitor
         {
             if (!isEnabled) return;
 
-            if (DateTime.Now - lastHandledEventTimeStamp < minWaitForNextEvent)
+            if (DateTime.Now - lastHandledEventTimeStamp < MinWaitForNextEvent)
                 return;
 
             lastHandledEventTimeStamp = DateTime.Now;

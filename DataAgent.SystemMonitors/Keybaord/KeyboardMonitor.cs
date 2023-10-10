@@ -86,7 +86,7 @@ internal class KeyboardMonitor : MessagePublisher, IMonitorKeyboard
 
             if (nCode >= 0 && wParam == (IntPtr)WindowsMessages.WM_KEYDOWN)
             {
-                if (DateTime.Now - lastHandledEventTimeStamp > minWaitForNextEvent)
+                if (DateTime.Now - lastHandledEventTimeStamp > MinWaitForNextEvent)
                 {
                     lastHandledEventTimeStamp = DateTime.Now;
 

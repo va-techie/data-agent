@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "DataAgent.ClientApps.WinUI (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "DataAgent.ClientApps.WinUI (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}

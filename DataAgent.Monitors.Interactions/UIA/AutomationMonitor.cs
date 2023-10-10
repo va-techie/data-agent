@@ -11,7 +11,7 @@ internal abstract class AutomationMonitor : MessagePublisher, IModule
 {
     public AutomationMonitor()
     {
-        minWaitForNextEvent = TimeSpan.FromMilliseconds(200);
+        WaitInBetweenEvents = 200;
     }
     public abstract void Initialize();
     public abstract void Shutdown();
