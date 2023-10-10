@@ -116,11 +116,11 @@ internal class KeyboardMonitor : MessagePublisher, IMonitorKeyboard
                             var process = Diag.Process.GetProcessById(processId);
                             msg.ProcessName = process.ProcessName;
                             msg.WindowTitle = process.MainWindowTitle;
-                        }
 
-                        automationElementsQueueForMoreDetails.Enqueue(new Tuple<AutomationElement, IMonitorMessageExtendable>(focused, msg));
-                        queued = true;
-                        ThreadPool.QueueUserWorkItem((state) => AddDetailsToMessageFromQueueAndPublish());
+                            automationElementsQueueForMoreDetails.Enqueue(new Tuple<AutomationElement, IMonitorMessageExtendable>(focused, msg));
+                            queued = true;
+                            ThreadPool.QueueUserWorkItem((state) => AddDetailsToMessageFromQueueAndPublish());
+                        }
                     }
 
                     if (!sameProcess && !queued)

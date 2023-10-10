@@ -11,6 +11,7 @@ public static class Literals
     {
         public const string Mouse = "Mouse";
         public const string Keyboard = "Keboard";
+        public const string Stylus = "Stylus";
     }
 
     public static class Patterns
