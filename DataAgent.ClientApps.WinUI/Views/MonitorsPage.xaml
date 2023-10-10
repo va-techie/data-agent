@@ -24,9 +24,10 @@
                     Grid.Column="1">
               <Slider.Header>
                 <TextBlock>
-                  <Run Text="Wait "/>
-                  <Run Text="{Binding WaitInBetweenEvents}"/>
-                  <Run Text=" ms before monitoring next event"/>
+                  <Run Text="Wait"/>
+                  <Run Text="{Binding WaitInBetweenEvents}" FontStyle="Italic"/>
+                  <Run Text="ms" FontStyle="Italic"/>
+                  <Run Text="before monitoring next event"/>
                 </TextBlock>
               </Slider.Header>
             </Slider>

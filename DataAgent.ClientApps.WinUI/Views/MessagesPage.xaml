@@ -5,7 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:local="using:DataAgent.ClientApps.WinUI.Views"
+    xmlns:winUIControls="using:CommunityToolkit.WinUI.Controls"
+  xmlns:local="using:DataAgent.ClientApps.WinUI.Views"
     mc:Ignorable="d">
   <UserControl.Resources>
     <local:PropertiesValuesConverter x:Key="PropertiesValuesConverter"/>
@@ -41,7 +42,8 @@
                        IsReadOnly="True"
                        ItemsSource="{Binding Messages, Mode=OneWay}"
                        AutoGenerateColumns="False"
-                       SelectionMode="Single">
+                       SelectionMode="Single"
+                       Margin="0,0,0,5">
       <controls:DataGrid.Columns>
         <controls:DataGridTextColumn Header="Time Stamp" Binding="{Binding TimeStamp}"/>
         <controls:DataGridTextColumn Header="Monitor" Binding="{Binding Sender}"/>
@@ -74,6 +76,13 @@
         </controls:DataGridTemplateColumn>
       </controls:DataGrid.Columns>
     </controls:DataGrid>
+    <winUIControls:GridSplitter Grid.Row="2"
+                               Height="16"
+                               VerticalAlignment="Top">
+      <winUIControls:GridSplitter.RenderTransform>
+        <TranslateTransform Y="-7" />
+      </winUIControls:GridSplitter.RenderTransform>
+    </winUIControls:GridSplitter>
     <Grid Grid.Row="2">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
